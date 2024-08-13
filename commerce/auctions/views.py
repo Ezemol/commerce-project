@@ -9,7 +9,10 @@ from .models import User, AuctionListing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = AuctionListing.objects.filter(is_active=True)
+    return render(request, "auctions/index.html", {
+        "listings": listings
+    })
 
 
 def login_view(request):
@@ -70,6 +73,7 @@ def create_listing(request):
         if form.is_valid():
             listing = form.save(commit=False)
             listing.owner = request.user
+            listing.is_active = True
             listing.save()
             return redirect("index")
     else:
@@ -77,9 +81,4 @@ def create_listing(request):
 
     return render(request, "auctions/create_listing.html", {
         "form": form
-    })
-
-def active_listing(request):
-    if AuctionListing.is_active == True:
-        
-        pass
+    })   
