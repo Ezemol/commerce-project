@@ -3,7 +3,7 @@
 {% block body %}
 <h1>Create your Listing</h1>
 <div>
-    <form action="{% url 'create_listing' %}" method="post">
+    <form action="{% url 'auctions:create_listing' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <div>

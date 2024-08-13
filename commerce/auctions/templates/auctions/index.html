@@ -7,7 +7,9 @@
         <ul>
             {% for listing in listings %}
                 <li>
-                    <h3>{{ listing.title }}</h3>
+                    <a href="{% url 'auctions:listing_detail' listing.id %}" method="post">
+                        <h3>{{ listing.title }}</h3>
+                    </a>
                     <p>{{ listing.description }}</p>
                     <p>Price: ${{ listing.starting_bid }}</p>
                     {% if listing.image_url %}

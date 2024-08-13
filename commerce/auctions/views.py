@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .forms import ListingForm
 from .models import User, AuctionListing
@@ -26,7 +26,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:index"))
         else:
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
@@ -37,7 +37,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("auctions:index"))
 
 
 def register(request):
@@ -75,10 +75,20 @@ def create_listing(request):
             listing.owner = request.user
             listing.is_active = True
             listing.save()
-            return redirect("index")
+            return redirect("auctions:index")
     else:
         form = ListingForm()  # Inicializa form para solicitudes GET
 
     return render(request, "auctions/create_listing.html", {
         "form": form
     })   
+
+
+def listing_detail(request, listing_id):
+    if request.method == "GET":
+        listing = get_object_or_404(AuctionListing, id=listing_id)
+        return render(request, "auctions/listing_detail.html", {
+            "listing": listing
+        })
+    return render(request, "auctions/index.html")
+    
