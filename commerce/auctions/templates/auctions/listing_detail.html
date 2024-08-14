@@ -3,10 +3,32 @@
 {% block body %}
     <h2>{{ listing.title }}</h2>
     <p>{{ listing.description }}</p>
-    <p>Current price: ${{ listing.starting_bid }}</p>
+    <p>Starting bid: ${{ listing.starting_bid }}</p>
     {% if listing.image_url %}
         <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
-        {% endif %}
-        <p>Category: {{ listing.category }}</p>
-        <p>Owner: {{ listing.owner.username }}</p>
+    {% endif %}
+    <p>Category: {{ listing.category }}</p>
+    <p>Owner: {{ listing.owner.username }}</p>
+
+    {% if user.is_authenticated %}
+    <div>
+        <h3>Make bid</h3>
+        current bid: ${{ listing.starting_bid }}
+        <form action="{% url 'auctions:bid' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="number" value="Input bid">
+            <button type="submit">Submit bid</button>
+        </form>
+    </div>
+    <div>
+        <form action="{% url 'auctions:watchlist' listing.id %}" method="post">
+            {% csrf_token %}
+            {% if is_in_watchlist %}
+                <button type="submit">Remove from Watchlist</button>
+            {% else %}
+                <button type="submit">Add to Watchlist</button>
+            {% endif %}
+        </form>
+    </div>
+    {% endif %}
 {% endblock %}

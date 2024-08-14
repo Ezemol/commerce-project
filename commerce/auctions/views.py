@@ -87,8 +87,25 @@ def create_listing(request):
 def listing_detail(request, listing_id):
     if request.method == "GET":
         listing = get_object_or_404(AuctionListing, id=listing_id)
-        return render(request, "auctions/listing_detail.html", {
-            "listing": listing
+        is_in_watchlist = request.user.is_authenticated and listing in request.user.watchlist.all() # If usuario logueado and existe lista 
+        return render(request, "auctions/listing_detail.html", { # Return llevar a página de detalles del producto
+            "listing": listing,
+            "is_in_watchlist": is_in_watchlist
         })
     return render(request, "auctions/index.html")
+
+
+@login_required
+def watchlist(request, listing_id):
+    listing = get_object_or_404(AuctionListing, id=listing_id)
+
+    if listing in request.user.watchlist.all():
+        request.user.watchlist.remove(listing)
+    else:
+        request.user.watchlist.add(listing)
     
+    return redirect('auctions:listing_detail', listing_id=listing_id)
+
+@login_required
+def bid(request, listing_id):
+    pass

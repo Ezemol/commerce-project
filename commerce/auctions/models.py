@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, AbstractUser
 
 # Model para usuario
 class User(AbstractUser):
-    pass
+    watchlist = models.ManyToManyField('AuctionListing', blank=True, related_name='watchlisted_by')
 
 class AuctionListing(models.Model):
     CATEGORY_CHOICES = [
