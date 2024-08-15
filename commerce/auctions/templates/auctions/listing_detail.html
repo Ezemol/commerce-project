@@ -1,6 +1,14 @@
-{% extends "auctions/layout.html" %}
+{% extends 'auctions/layout.html' %}
 
 {% block body %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <h2>{{ listing.title }}</h2>
     <p>{{ listing.description }}</p>
     <p>Starting bid: ${{ listing.starting_bid }}</p>
@@ -10,13 +18,18 @@
     <p>Category: {{ listing.category }}</p>
     <p>Owner: {{ listing.owner.username }}</p>
 
-    {% if user.is_authenticated %}
+    {% if not listing.is_active %}
+        <h3>Winner: {{ listing.winner.username }}</h3>
+        <p>Winning Bid: ${{ listing.winning_bid }}</p>
+    {% endif %}
+
+    {% if user.is_authenticated and listing.is_active %}
     <div>
         <h3>Make bid</h3>
-        current bid: ${{ listing.starting_bid }}
+        <p>Current Bid: ${{ current_highest_bid }}</p>
         <form action="{% url 'auctions:bid' listing.id %}" method="post">
             {% csrf_token %}
-            <input type="number" value="Input bid">
+            <input type="number" step="0.01" min="{{ listing.starting_bid }}" name="new_bid">
             <button type="submit">Submit bid</button>
         </form>
     </div>
@@ -29,6 +42,11 @@
                 <button type="submit">Add to Watchlist</button>
             {% endif %}
         </form>
+    </div>
+    <div>
+        {% if request.user == listing.owner %}
+        <a href="{% url 'auctions:close_auction' listing.id %}">Close Auction</a>
+        {% endif %}
     </div>
     {% endif %}
 {% endblock %}
