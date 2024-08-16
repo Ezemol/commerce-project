@@ -3,9 +3,13 @@
 {% block body %}
     <h2>Watchlist</h2>
     <h3>Current listings in watch:</h3>
-    {% if None %}
+    {% if all_watchlists == None %}
         No listings in watch.
     {% else %}
-        TODO
+        {% for watchlist in all_watchlists %}
+            <ul>
+                <li><a href="{% url 'auctions:listing_detail' watchlist.id %}">{{ watchlist.title }}</a></li>
+            </ul>
+        {% endfor %}
     {% endif %}
 {% endblock %}

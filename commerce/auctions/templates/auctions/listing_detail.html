@@ -19,8 +19,16 @@
     <p>Owner: {{ listing.owner.username }}</p>
 
     {% if not listing.is_active %}
-        <h3>Winner: {{ listing.winner.username }}</h3>
-        <p>Winning Bid: ${{ listing.winning_bid }}</p>
+        <div>
+            <h3>Winner: {{ listing.winner.username }}</h3>
+            <p>Winning Bid: ${{ listing.winning_bid }}</p>
+        </div>
+        <div>
+            {% if request.user == listing.winner %}
+                <h2>Congratulations!!</h2>
+                <h3>You won this auction for a {{ listing.title }}</h3>
+            {% endif %}
+        </div>
     {% endif %}
 
     {% if user.is_authenticated and listing.is_active %}
@@ -42,6 +50,21 @@
                 <button type="submit">Add to Watchlist</button>
             {% endif %}
         </form>
+    </div>
+    <div>
+        <form action="{% url 'auctions:comment' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="comment" id="comment">
+            <button type="submit">Post comment</button>
+        </form>
+        {% for comment in comments %}
+        <ul>
+            <li>
+                {{ comment.commenter }}: 
+                {{ comment.content }}
+            </li>
+        </ul> 
+        {% endfor %}
     </div>
     <div>
         {% if request.user == listing.owner %}
