@@ -10,20 +10,21 @@
 </head>
 <body>
     <div class="navbar">
+        {% if user.is_authenticated %}
+            <span class="welcome">Welcome, {{ user.username }}</span>
+        {% endif %}
         <ul>
             <li><a href="{% url 'auctions:index' %}">Home</a></li>
             <li><a href="{% url 'auctions:categories' %}">Categories</a></li>
             {% if user.is_authenticated %}
-                <li><span>Welcome, {{ user.username }}</span></li>
-                <li><a href="{% url 'auctions:logout' %}">Logout</a></li>
                 <li><a href="{% url 'auctions:create_listing' %}">Create Listing</a></li>
                 <li><a href="{% url 'auctions:watchlist_store' %}">Watchlist</a></li>
+                <li><a href="{% url 'auctions:logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'auctions:login' %}">Login</a></li>
                 <li><a href="{% url 'auctions:register' %}">Register</a></li>
             {% endif %}
         </ul>
-
     </div>
 
     <div class="container">

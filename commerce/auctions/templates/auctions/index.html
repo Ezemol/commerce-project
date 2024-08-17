@@ -1,24 +1,30 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <h2 class="active-listings-title">Active Listings</h2>
 
     {% if listings %}
-        <ul>
+        <div class="listing-container">
             {% for listing in listings %}
-                <li>
-                    <a href="{% url 'auctions:listing_detail' listing.id %}" method="post">
-                        <h3>{{ listing.title }}</h3>
+                <div class="listing-card">
+                    <a href="{% url 'auctions:listing_detail' listing.id %}">
+                        {% if listing.image_url %}
+                            <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="listing-image">
+                        {% else %}
+                            <img src="{% static 'auctions/default-image.jpg' %}" alt="{{ listing.title }}" class="listing-image">
+                        {% endif %}
+                        <div class="listing-details">
+                            <h3>{{ listing.title }}</h3>
+                            <p>{{ listing.description }}</p>
+                            <p>Starting bid: ${{ listing.starting_bid }}</p>
+                            <p>Category: {{ listing.get_category_display }}</p>
+                            <p>Owner: {{listing.owner}}</p>
+                        </div>
                     </a>
-                    <p>{{ listing.description }}</p>
-                    <p>Price: ${{ listing.starting_bid }}</p>
-                    {% if listing.image_url %}
-                        <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
-                    {% endif %}
-                    <p>Category: {{ listing.get_category_display }}</p>
-                </li>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No active listings are available at the moment.</p>
     {% endif %}

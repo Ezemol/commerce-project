@@ -4,71 +4,70 @@
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                <li class="messages__item {% if message.tags %}messages__item--{{ message.tags }}{% endif %}">{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
 
-    <h2>{{ listing.title }}</h2>
-    <p>{{ listing.description }}</p>
-    <p>Starting bid: ${{ listing.starting_bid }}</p>
+    <h2 class="active-listings-title">{{ listing.title }}</h2>
+    <p class="listing-details__text">{{ listing.description }}</p>
+    <p class="listing-details__text">Starting bid: ${{ listing.starting_bid }}</p>
     {% if listing.image_url %}
-        <img src="{{ listing.image_url }}" alt="{{ listing.title }}">
+        <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="listing-details__image">
     {% endif %}
-    <p>Category: {{ listing.category }}</p>
-    <p>Owner: {{ listing.owner.username }}</p>
+    <p class="listing-details__text">Category: {{ listing.category }}</p>
+    <p class="listing-details__text">Owner: {{ listing.owner.username }}</p>
 
     {% if not listing.is_active %}
-        <div>
-            <h3>Winner: {{ listing.winner.username }}</h3>
-            <p>Winning Bid: ${{ listing.winning_bid }}</p>
+        <div class="listing-details__section">
+            <h3 class="listing-details__text">Winner: {{ listing.winner.username }}</h3>
+            <p class="listing-details__text">Winning Bid: ${{ listing.winning_bid }}</p>
         </div>
-        <div>
+        <div class="listing-details__section">
             {% if request.user == listing.winner %}
-                <h2>Congratulations!!</h2>
-                <h3>You won this auction for a {{ listing.title }}</h3>
+                <h2 class="listing-details__text">Congratulations!!</h2>
+                <h3 class="listing-details__text">You won this auction for a {{ listing.title }}</h3>
             {% endif %}
         </div>
     {% endif %}
 
     {% if user.is_authenticated and listing.is_active %}
-    <div>
-        <h3>Make bid</h3>
-        <p>Current Bid: ${{ current_highest_bid }}</p>
-        <form action="{% url 'auctions:bid' listing.id %}" method="post">
+    <div class="listing-details__section">
+        <h3 class="listing-details__text">Make bid</h3>
+        <p class="listing-details__text">Current Bid: ${{ current_highest_bid }}</p>
+        <form action="{% url 'auctions:bid' listing.id %}" method="post" class="listing-details__form">
             {% csrf_token %}
-            <input type="number" step="0.01" min="{{ listing.starting_bid }}" name="new_bid">
-            <button type="submit">Submit bid</button>
+            <input type="number" step="0.01" min="{{ listing.starting_bid }}" name="new_bid" class="listing-details__input">
+            <button type="submit" class="listing-details__button">Submit bid</button>
         </form>
     </div>
-    <div>
-        <form action="{% url 'auctions:watchlist' listing.id %}" method="post">
+    <div class="listing-details__section">
+        <form action="{% url 'auctions:watchlist' listing.id %}" method="post" class="listing-details__form">
             {% csrf_token %}
             {% if is_in_watchlist %}
-                <button type="submit">Remove from Watchlist</button>
+                <button type="submit" class="listing-details__button">Remove from Watchlist</button>
             {% else %}
-                <button type="submit">Add to Watchlist</button>
+                <button type="submit" class="listing-details__button">Add to Watchlist</button>
             {% endif %}
         </form>
     </div>
-    <div>
-        <form action="{% url 'auctions:comment' listing.id %}" method="post">
+    <div class="listing-details__section">
+        <form action="{% url 'auctions:comment' listing.id %}" method="post" class="listing-details__form">
             {% csrf_token %}
-            <input type="text" name="comment" id="comment">
-            <button type="submit">Post comment</button>
+            <input type="text" name="comment" id="comment" class="listing-details__input">
+            <button type="submit" class="listing-details__button">Post comment</button>
         </form>
-        {% for comment in comments %}
-        <ul>
-            <li>
-                {{ comment.commenter }}: 
-                {{ comment.content }}
+        <ul class="listing-details__comments">
+            {% for comment in comments %}
+            <li class="listing-details__comment">
+                {{ comment.commenter }}: {{ comment.content }}
             </li>
+            {% endfor %}
         </ul> 
-        {% endfor %}
     </div>
-    <div>
+    <div class="listing-details__section">
         {% if request.user == listing.owner %}
-        <a href="{% url 'auctions:close_auction' listing.id %}">Close Auction</a>
+        <a href="{% url 'auctions:close_auction' listing.id %}" class="listing-details__button">Close Auction</a>
         {% endif %}
     </div>
     {% endif %}

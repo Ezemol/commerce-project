@@ -63,7 +63,7 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html")
 
@@ -159,7 +159,7 @@ def close_auction(request, listing_id):
 def comment(request, listing_id):
     listing = get_object_or_404(AuctionListing, id=listing_id)  # Obtener la subasta o mostrar error 404 si no existe.
 
-    if request.method == "POST":
+    if request.method == "POST" and request.method is not None:
         new_comment = Comment(commenter=request.user, listing=listing, content=request.POST["comment"])  # Crear y guardar el nuevo comentario.
         new_comment.save()
     return redirect("auctions:listing_detail", listing_id=listing_id)

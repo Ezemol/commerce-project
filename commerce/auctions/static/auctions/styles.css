@@ -1,187 +1,405 @@
-/* Estilo global */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+/* LAYOUT*/
+body, ul {
     margin: 0;
     padding: 0;
-    line-height: 1.6;
 }
 
-/* Estilo de la barra de navegación */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
 .navbar {
-    background-color: #007bff;
-    color: white;
+    background-color: #333;
+    overflow: hidden;
     padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.navbar a {
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline;
+    padding: 0 20px;
+}
+
+.navbar ul li a {
     color: white;
     text-decoration: none;
-    padding: 8px 15px;
-    transition: background 0.3s ease;
+    padding: 14px 20px;
+    display: inline-block;
+    transition: background-color 0.3s; /* Efecto de transición para el fondo */
 }
 
-.navbar a:hover {
-    background-color: #0056b3;
-    border-radius: 5px;
+.navbar ul li a:hover {
+    background-color: #575757;
+    color: white;
+    transition: background-color 0.3s; /* Efecto de transición para el fondo */
 }
 
-/* Contenedor principal */
+.welcome {
+    float: left;
+    color: white;
+    padding: 14px 20px;
+}
+
 .container {
-    max-width: 1200px;
-    margin: 20px auto;
+    margin: 20px;
     padding: 20px;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Títulos */
-h1, h2, h3, h4, h5, h6 {
-    color: #007bff;
-    margin-bottom: 20px;
-}
-
-/* Botones */
-button, .btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-button:hover, .btn:hover {
-    background-color: #0056b3;
-}
-
-/* Estilo para listas individuales de subastas */
-.auction-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.auction-item {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.auction-item:hover {
-    transform: scale(1.02);
-}
-
-.auction-item h3 {
-    margin-top: 0;
-    color: #007bff;
-}
-
-.auction-item p {
-    margin-bottom: 10px;
-    color: #555;
-}
-
-.auction-item .price {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #28a745;
-}
-
-.auction-item .btn {
-    margin-top: 10px;
-}
-
-/* Tablas */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-
-th {
-    background-color: #007bff;
-    color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f4f4f4;
-}
-
-/* Estilo del pie de página */
 .footer {
     text-align: center;
-    padding: 20px;
-    background-color: #007bff;
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #333;
     color: white;
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
 }
 
-/* Estilos de formulario */
-form {
+
+/* ACTIVE LISTINGS */
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
-input[type="text"], input[type="password"], textarea {
+/* Container for the content */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1; /* Allows the container to grow and push the footer down */
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #333;
     padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 16px;
+    text-align: right;
 }
 
-input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
-    border-color: #007bff;
-    outline: none;
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-input[type="submit"] {
-    background-color: #28a745;
+.navbar ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.navbar ul li a {
     color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-input[type="submit"]:hover {
-    background-color: #218838;
+/* Welcome message styling */
+.navbar ul li span {
+    color: white;
+    margin-right: auto; /* Move to the left */
+    font-weight: bold;
 }
 
-/* Estilo para mensajes de error y éxito */
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    font-size: 16px;
+/* Footer styling */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto; /* Pushes the footer to the bottom of the page */
 }
 
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
+/* Estilo para el contenedor de las tarjetas */
+.listing-grid {
+    display: flex;
+    flex-direction: column; /* Alinea las tarjetas verticalmente */
+    gap: 20px; /* Espacio entre las tarjetas */
 }
 
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
+/* Estilo para cada tarjeta de listado */
+.listing-card {
+    display: flex;
+    align-items: stretch; /* Hace que la imagen y el texto ocupen todo el alto del contenedor */
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px 0; /* Espacio vertical entre tarjetas */
+    padding: 10px;
+    width: 100%; /* Ancho completo del contenedor */
+    box-sizing: border-box;
+    background-color: #333;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-decoration: none; /* Elimina el subrayado del texto */
+}
+
+.listing-card a {
+    text-decoration: none; /* Asegura que los enlaces dentro de listing-card no estén subrayados */
+    color: inherit; /* Hereda el color del texto */
+    display: flex;
+    flex-direction: row;
+}
+
+.listing-image {
+    width: 150px; /* Tamaño fijo para imágenes */
+    height: 100%; /* Ocupa todo el alto del contenedor */
+    text-align: center;
+    object-fit: cover;
+    margin-right: 15px; /* Espacio entre imagen y texto */
+    color: #fff;
+}
+
+.listing-details {
+    flex: 1; /* Ocupa el espacio restante */
+    color: #fff; /* Color del texto negro */
+}
+
+/* Estilo para el título de Active Listings */
+.active-listings-title {
+    border: 2px solid #333; /* Borde negro para destacar el título */
+    border-radius: 8px; /* Bordes redondeados para un aspecto más moderno */
+    padding: 15px; /* Espacio interno para que el texto no esté pegado al borde */
+    margin: 20px 0; /* Espacio vertical alrededor del título */
+    background-color: #333; /* Fondo negro igual al del layout */
+    color: #fff; /* Texto en blanco para un buen contraste con el fondo negro */
+    font-size: 24px; /* Tamaño de fuente grande para el título */
+    font-weight: bold; /* Fuente en negrita para mayor énfasis */
+    text-align: center; /* Centrar el texto dentro del título */
+}
+
+/* Estilo para el contenido de la tarjeta */
+.listing-card-content {
+    flex: 1; /* Ocupa el espacio restante en la tarjeta */
+}
+
+.listing-card:hover {
+    background-color: #333;
+    transform: scale(1.02); /* Efecto de agrandar ligeramente al pasar el ratón */
+}
+
+.listing-card h3 {
+    margin: 0 0 10px;
+}
+
+.listing-card p {
+    margin: 5px 0;
+}
+
+
+/* Para pagina de crear subastas */
+form {
+    background-color: #333; /* Color de fondo suave para el formulario */
+    color: #fff;
+    border: 1px solid #333; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 20px; /* Espacio interno */
+    margin: 20px auto; /* Espaciado y centrado automático */
+    max-width: 100%; /* Ancho máximo del formulario */
+}
+
+form h1 {
+    color: #fff; /* Color del texto del título del formulario */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    text-align: center; /* Centra el texto del título */
+}
+
+form div {
+    margin-bottom: 15px; /* Espacio entre los campos del formulario */
+}
+
+form label {
+    display: block; /* Asegura que las etiquetas ocupen toda la línea */
+    font-weight: bold; /* Etiquetas en negrita */
+    margin-bottom: 5px; /* Espacio debajo de las etiquetas */
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
+    width: 100%; /* Campo de formulario ocupa el 100% del ancho disponible */
+    padding: 10px; /* Espacio interno en los campos */
+    border: 1px solid #333; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluye el padding y borde en el ancho total del campo */
+}
+
+form input[type="submit"] {
+    background-color: #fff; /* Fondo del botón de enviar */
+    color: #333; /* Color del texto del botón */
+    border: 1px solid #333; /* Sin borde */
+    padding: 10px 20px; /* Espacio interno en el botón */
+    border-radius: 5px; /* Bordes redondeados del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente del botón */
+}
+
+form input[type="submit"]:hover {
+    background-color: #333; /* Fondo del botón de enviar */
+    color: #fff; /* Color del texto del botón */
+    border: 1px solid #fff; /* Sin borde */
+    padding: 10px 20px; /* Espacio interno en el botón */
+    border-radius: 5px; /* Bordes redondeados del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente del botón */
+}
+
+
+/* Estilo para categorías */
+
+/* Estilo para la lista de categorías */
+.categories-list {
+    padding: 0; /* Quitar el relleno de la lista */
+    margin: 0; /* Quitar el margen de la lista */
+}
+
+/* Estilo para cada ítem de categoría */
+.category-item {
+    margin-bottom: 10px; /* Espacio inferior entre ítems */
+    list-style: none; /* Quitar los puntos de la lista */
+}
+
+/* Estilo para los enlaces de categoría */
+.category-link {
+    display: block; /* Hacer que el enlace ocupe todo el ancho disponible */
+    padding: 10px 15px; /* Espaciado interno */
+    background-color: #333; /* Fondo gris claro */
+    color: #fff; /* Texto gris oscuro */
+    text-decoration: none; /* Quitar el subrayado del enlace */
+    border: 1px solid #333; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Efecto de transición para el fondo */
+}
+
+.category-link:hover {
+    background-color: #fff; /* Fondo gris más oscuro al pasar el ratón */
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+
+/* Category page */
+/* Estilo para el mensaje cuando no hay listados */
+.no-listings-message {
+    font-size: 1.2rem; /* Tamaño de fuente para el mensaje */
+    color: #333; /* Color gris para el mensaje */
+    text-align: center; /* Centrar el mensaje */
+    margin-top: 20px; /* Espacio superior */
+    font-size: 20px;
+}
+
+
+/* Estilo para la sección de mensajes */
+.messages {
+    list-style: none; /* Quitar los puntos de la lista */
+    padding: 0; /* Quitar el relleno */
+    margin: 20px 0; /* Margen superior e inferior */
+}
+
+.messages__item {
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-bottom: 10px; /* Espacio entre mensajes */
+    background-color: #f4f4f4; /* Fondo gris claro */
+}
+
+.messages__item--success {
+    background-color: #d4edda; /* Fondo verde claro */
+    border-color: #c3e6cb; /* Borde verde claro */
+    color: #155724; /* Texto verde oscuro */
+}
+
+.messages__item--error {
+    background-color: #f8d7da; /* Fondo rojo claro */
+    border-color: #f5c6cb; /* Borde rojo claro */
+    color: #721c24; /* Texto rojo oscuro */
+}
+
+/* Estilo general para el contenido de la subasta */
+.listing-details__section {
+    margin-bottom: 20px; /* Espacio inferior entre secciones */
+}
+
+.listing-details__text {
+    margin: 10px 0; /* Espacio superior e inferior */
+    color: #333; /* Texto gris oscuro */
+}
+
+/* Estilo para los formularios */
+.listing-details__form {
+    margin: 20px 0; /* Espacio superior e inferior */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #333; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #333; /* Fondo gris claro */
+}
+
+.listing-details__input {
+    width: 100%; /* Ancho completo del contenedor */
+    padding: 5px; /* Espaciado interno */
+    margin-bottom: 10px; /* Espacio inferior */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+.listing-details__button {
+    padding: 10px 15px; /* Espaciado interno */
+    border: none; /* Quitar el borde por defecto */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #333; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Efecto de transición para el fondo */
+}
+
+.listing-details__button:hover {
+    background-color: #555; /* Fondo gris oscuro al pasar el mouse */
+}
+
+/* Estilo para los comentarios */
+.listing-details__comments {
+    list-style: none; /* Quitar los puntos de la lista */
+    padding: 0; /* Quitar el relleno */
+    margin: 10px 0; /* Espacio superior e inferior */
+}
+
+.listing-details__comment {
+    padding: 10px; /* Espaciado interno */
+    border-bottom: 1px solid #ddd; /* Borde inferior gris claro */
+}
+
+.listing-details__comment:last-child {
+    border-bottom: none; /* Quitar el borde en el último ítem */
+}
+
+/* Estilo para la imagen de la subasta */
+.listing-details__image {
+    max-width: 100%; /* Asegura que la imagen no se desborde horizontalmente del contenedor */
+    max-height: 300px; /* Ajusta la altura máxima según tus necesidades */
+    width: auto; /* Mantiene la proporción de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block; /* Elimina el espacio inferior */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+    object-fit: cover; /* Ajusta la imagen para que cubra el área sin distorsionarse */
 }

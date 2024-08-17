@@ -1,15 +1,17 @@
 {% extends 'auctions/layout.html' %}
 
 {% block body %}
-    <h2>Watchlist</h2>
-    <h3>Current listings in watch:</h3>
-    {% if all_watchlists == None %}
-        No listings in watch.
-    {% else %}
+    <h2 class="active-listings-title">Watchlist</h2>
+    <h3 class="no-listings-message">Current listings in watch:</h3>
+    {% if all_watchlists %}
         {% for watchlist in all_watchlists %}
-            <ul>
-                <li><a href="{% url 'auctions:listing_detail' watchlist.id %}">{{ watchlist.title }}</a></li>
+            <ul class="categories-list">
+                <li class="category-item">
+                    <a href="{% url 'auctions:listing_detail' watchlist.id %}" class="category-link">{{ watchlist.title }}</a>
+                </li>
             </ul>
         {% endfor %}
+    {% else %}
+        <p class="no-listings-message">No listings in watch.</p>
     {% endif %}
 {% endblock %}
