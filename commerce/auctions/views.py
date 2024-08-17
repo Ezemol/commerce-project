@@ -11,11 +11,19 @@ from decimal import Decimal
 
 # Vista para la página principal que muestra las subastas activas.
 def index(request):
-    listings = AuctionListing.objects.filter(is_active=True)  # Filtra las subastas activas.
-    return render(request, "auctions/index.html", {
-        "listings": listings
-    })
+    # Obtén todas las subastas activas
+    active_listings = AuctionListing.objects.filter(is_active=True)
 
+    # Si el usuario está autenticado, también obtén las subastas ganadas por el usuario
+    if request.user.is_authenticated:
+        won_listings = AuctionListing.objects.filter(winner=request.user)
+    else:
+        won_listings = []
+
+    return render(request, "auctions/index.html", {
+        "active_listings": active_listings,
+        "won_listings": won_listings,
+    })
 # Vista para iniciar sesión en la aplicación.
 def login_view(request):
     if request.method == "POST":

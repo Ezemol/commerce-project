@@ -1,12 +1,12 @@
-{% extends "auctions/layout.html" %}
+{% extends 'auctions/layout.html' %}
 {% load static %}
 
 {% block body %}
     <h2 class="active-listings-title">Active Listings</h2>
 
-    {% if listings %}
+    {% if active_listings %}
         <div class="listing-container">
-            {% for listing in listings %}
+            {% for listing in active_listings %}
                 <div class="listing-card">
                     <a href="{% url 'auctions:listing_detail' listing.id %}">
                         {% if listing.image_url %}
@@ -19,7 +19,7 @@
                             <p>{{ listing.description }}</p>
                             <p>Starting bid: ${{ listing.starting_bid }}</p>
                             <p>Category: {{ listing.get_category_display }}</p>
-                            <p>Owner: {{listing.owner}}</p>
+                            <p>Owner: {{ listing.owner }}</p>
                         </div>
                     </a>
                 </div>
@@ -27,5 +27,33 @@
         </div>
     {% else %}
         <p>No active listings are available at the moment.</p>
+    {% endif %}
+
+    {% if won_listings %}
+        <h2 class="active-listings-title">Listings You Won</h2>
+        <div class="listing-container">
+            {% for listing in won_listings %}
+                <div class="listing-card">
+                    <a href="{% url 'auctions:listing_detail' listing.id %}">
+                        {% if listing.image_url %}
+                            <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="listing-image">
+                        {% else %}
+                            <img src="{% static 'auctions/default-image.jpg' %}" alt="{{ listing.title }}" class="listing-image">
+                        {% endif %}
+                        <div class="listing-details">
+                            <h3>{{ listing.title }}</h3>
+                            <p>{{ listing.description }}</p>
+                            <p>Winning bid: ${{ listing.winning_bid }}</p>
+                            <p>Category: {{ listing.get_category_display }}</p>
+                            <p>Owner: {{ listing.owner }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        {% if request.user.is_authenticated %}
+            <p>You have not won any listings yet.</p>
+        {% endif %}
     {% endif %}
 {% endblock %}
